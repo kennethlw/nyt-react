@@ -95,10 +95,10 @@ var Main = React.createClass({
 
         <div className="row">
 
-          <div className="jumbotron">
-            <h2 className="text-center">New York Times Article Search</h2>
-            <p className="text-center">
-              <em>Search for a particular article and save it.</em>
+          <div className="jumbotron" style={{'backgroundImage': 'url(./assets/img/background.jpg)', 'backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': '100% 100%', 'backgroundAttachment': 'fixed'}}>
+            <h2 className="text-center"style={{'color': 'white', 'font-weight': 'bold', 'font-size': '48px'}}>New York Times Article Search</h2>
+            <p className="text-center" style={{'color': 'white'}}>
+              <em>Search for an article topic and save it!</em>
             </p>
           </div>
 

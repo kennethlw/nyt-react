@@ -27,7 +27,25 @@ router.get('/api/saved', function(req, res) {
    });
 });
 
+router.post('/api/saved', function(req, res) {
+  
+  // Using the Article model, create a new entry 
+  var newArticle = new Article(req.body);
 
+  // Save the entry to MongoDB
+  newArticle.save(function(err, doc) {
+    // log any errors
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } 
+    // or log the doc that was saved to the DB
+    else {
+      res.send(doc);
+    }
+  });
+
+});
 
 // API DELETE - your components will use this to delete a saved article in the database
 router.delete("/api/saved/:id", function(req, res) {

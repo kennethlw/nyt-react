@@ -49,45 +49,9 @@ db.once('open', function() {
 // Import Routes/Controller
 var Article = require('./models/Article.js');
 
-const router = require('./controllers/controller.js');
+var router = require('./controllers/controller.js');
+
 app.use('/', router);
-
-
-app.post('/api/saved', function(req, res) {
-  
-  // Using the Article model, create a new entry 
-  var newArticle = new Article({
-    title: req.body.title, 
-    date: req.body.date, 
-    url: req.body.url
-  });
-
-  // Save the entry to MongoDB
-  newArticle.save(function(err, doc) {
-    // log any errors
-    if (err) {
-      console.log(err);
-      res.send(err);
-    } 
-    // or log the doc that was saved to the DB
-    else {
-      res.send(doc);
-    }
-  });
-
-});
-
-/*
-app.delete('/api/saved/:id', function(req, res){
-
-  Article.find({'_id': req.params.id}).remove()
-    .exec(function(err, doc) {
-      res.send(doc);
-  });
-
-});
-*/
-
 
 // Launch App
 app.listen(PORT, function(){

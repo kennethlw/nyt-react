@@ -39,8 +39,8 @@ var helpers = {
       } 
 
       else {
-        // If we don't get any results, return an empty string via *Promise*
-        reject("");
+        // If we don't get any results, return an empty string
+        return("");
       }   
     })
 },
@@ -51,7 +51,6 @@ var helpers = {
     axios.post('/api/saved', {title: title, date: date, url: url})
     .then(function(result){
 
-      console.log("Posted to MongoDB!!!!!!!!");
       return(result);
     })
   }
