@@ -9,6 +9,11 @@ const logger = require('morgan'); // for debugging
 const app = express();
 var PORT = process.env.PORT || 3000;
 
+
+//using socket.io to notify the user
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -43,12 +48,21 @@ db.once('open', function() {
   console.log('Mongoose connection successful.');
 });
 
+//Socket IO Configuration
 // --------------------------------------------
+io.on('connection', function(socket) {
+	console.log("We have user connected!");
+
+	socket.on('article added', function(data) {
+		io.emit('Article added');
+	});
+});
+
+//---------------------------------------------
 
 
 // Import Routes/Controller
 var Article = require('./models/Article.js');
-
 var router = require('./controllers/controller.js');
 
 app.use('/', router);

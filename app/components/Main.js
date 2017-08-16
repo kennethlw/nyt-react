@@ -1,7 +1,13 @@
-var axios =require("axios");
+var axios = require("axios");
 
 // Include React
 var React = require("react");
+
+// Including the Link component from React Router to navigate within our application without full page reloads
+var router = require("react-router-dom")
+var Link = router.Link;
+var Route = router.Route;
+
 
 // Here we include all of the sub-components
 var Form = require("./children/Form");
@@ -38,9 +44,7 @@ var Main = React.createClass({
   },
 
   deleteArticle: function(article) {
-  		console.log(article);
-  		axios.delete('/api/saved/' + article._id)
-  			.then(function(response) {
+  		axios.delete('/api/saved/' + article._id).then(function(response) {
   				this.setState({
   					savedArticles: response.data
   				});
@@ -63,9 +67,10 @@ var Main = React.createClass({
   // when component updates this will run 
   componentDidUpdate: function(prevProps, prevState){
 
-		if(prevState.title != this.state.title){
-			console.log("UPDATED");
-
+		if(prevState.title != this.state.title ||
+		   prevState.startYear != this.state.startYear ||
+		   prevState.endYear !=this.state.endYear) {
+			
 			helpers.runQuery(this.state.title, this.state.startYear, this.state.endYear)
 				.then(function(data){
 					console.log(data);
@@ -90,39 +95,43 @@ var Main = React.createClass({
 
    // Here we describe this component's render method
    render: function() {
-    return (
-      <div className="container">
+    return ( 
+	      <div className="container">
+	        <div className="row">
+	          <div className="jumbotron text-center" style={{'backgroundImage': 'url(./assets/img/background.jpg)', 'backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': '100% 100%', 'backgroundAttachment': 'fixed'}}>
+	            <h2 className="text-center"style={{'color': 'white', 'fontWeight': 'bold', 'fontSize': '48px'}}>New York Times Article Search</h2>
+	            <p className="text-center" style={{'color': 'white'}}>
+	              <em>Search for an article topic and save it!</em>
+	            </p>
+	            <hr />
+	            <p>
+	            <Link to="/"><button className="btn btn-primary btn-lg">Search Articles</button></Link>
+            	<Link to="/Saved"><button className="btn btn-danger btn-lg">Saved Articles</button></Link>
+            	</p>
+	          </div>
+	          </div>
 
-        <div className="row">
+		         <div className="row">
+				     
+				     	<Route exact path="/" render={(props) => (
+				     	  <Form {...props}
+				     	   searchTerm={this.searchTerm}
+				     	   results={this.state.results}
+				     	   saveArticle={this.saveArticle}
+				     	   getArticle={this.getArticle}
+				     	   />
+			          	)}/>
 
-          <div className="jumbotron" style={{'backgroundImage': 'url(./assets/img/background.jpg)', 'backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': '100% 100%', 'backgroundAttachment': 'fixed'}}>
-            <h2 className="text-center"style={{'color': 'white', 'font-weight': 'bold', 'font-size': '48px'}}>New York Times Article Search</h2>
-            <p className="text-center" style={{'color': 'white'}}>
-              <em>Search for an article topic and save it!</em>
-            </p>
-          </div>
+			          	<Route exact path="/saved" render={(props) => (
+				            <Saved {...props}
+				              savedArticles={this.state.savedArticles}
+				              getArticle={this.getArticle}
+				              deleteArticle={this.deleteArticle}
+				            />
+				          )} />
+			     </div>
 
-         <div className="row">
-		     <div className="col-md-12">
-	          	<Form searchTerm={this.searchTerm} />
-	         </div>
 	      </div>
-
-	     <div className="row">
-          	<div className="col-md-12">
-          		<Results results={this.state.results} saveArticle={this.saveArticle} />
-          	</div>
-         </div>
-
-         <div className="row">
-          	<div className="col-md-12">
-          		<Saved savedArticles={this.state.savedArticles} deleteArticle={this.deleteArticle} />
-          	</div>
-         </div>
-
-        </div>
-
-      </div>
     );
    }
 });

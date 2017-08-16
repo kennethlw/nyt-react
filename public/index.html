@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <!-- Tab Title -->
-    <title>New York Times React!</title>
+    <title>New York Times React Search</title>
     <!-- Favicon -->
     <link rel="icon" href="assets/img/new-york-times-icon.png">
     <!-- View Port Size -->
@@ -11,14 +11,17 @@
     <!-- Link in Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
+      <!-- All of the JSX code will be transpiled into this bundle.js file -->
+    
   </head>
 
-  <body style="background-color: #F0F0F0">
+  <body>
     <!-- This is where React will deploy the contents it generates -->
     <div id="app"></div>
-
-    <!-- All of the JSX code will be transpiled into this bundle.js file -->
-    <script src="bundle.js"></script>
     
+
+    <script src="bundle.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   </body>
 </html>
