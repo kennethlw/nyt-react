@@ -52,7 +52,6 @@ var Main = React.createClass({
   				}.bind(this));
 
   		this.getArticle();
-
   },
 
   getArticle: function() {
@@ -120,11 +119,11 @@ var Main = React.createClass({
 				     	   saveArticle={this.saveArticle}
 				     	   getArticle={this.getArticle}
 				     	   />
-			          	)}/>
+			          	)} />
 
 			          	<Route exact path="/saved" render={(props) => (
 				            <Saved {...props}
-				              savedArticles={this.state.savedArticles}
+				           	  savedArticles={this.state.savedArticles}
 				              getArticle={this.getArticle}
 				              deleteArticle={this.deleteArticle}
 				            />

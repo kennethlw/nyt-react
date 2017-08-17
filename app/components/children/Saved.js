@@ -12,9 +12,15 @@ var Saved = React.createClass({
 
 	clickToDelete: function(result){
 		this.props.deleteArticle(result);
-
 	},
 
+	//we use this function because it will load on mount, not on prop change
+	//if we used component will receive props, it must be invoked twice to render correctly
+	componentDidMount(){ 		
+   		this.props.getArticle(); 		
+	},
+	
+	
 	componentWillReceiveProps: function(nextProps){
 		var that = this;
 		console.log(nextProps);
